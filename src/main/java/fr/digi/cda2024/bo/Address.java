@@ -10,11 +10,11 @@ import java.util.Objects;
 public class Address implements Serializable {
     /** Id, valeur numérique unique,
      * clé primaire auto-incrémentée en base de données
-     * */
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long Id;
+    private long id;
 
     /** Numéro de la rue */
     @Column(name = "NUMBER")
@@ -58,7 +58,7 @@ public class Address implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Address{");
-        sb.append("Id=").append(Id);
+        sb.append("ID=").append(id);
         sb.append(", number='").append(number).append('\'');
         sb.append(", street='").append(street).append('\'');
         sb.append(", zipCode='").append(zipCode).append('\'');
@@ -68,10 +68,10 @@ public class Address implements Serializable {
     }
 
     /**
-     * Retourne 'true' si l'objet passé en argument est identique
-     * à l'objet Address actuel, 'false' s'ils sont différents.
+     * Teste l'égalité entre l'objet actuel et celui passé en argument.
      * @param o objet à comparer à l'objet Address
-     * @return boolean
+     * @return boolean, 'true' si les objets sont identiques,
+     *          'false' s'ils sont différents
      */
     @Override
     public boolean equals(Object o) {
@@ -83,7 +83,7 @@ public class Address implements Serializable {
     /**
      * Retourne le "hash code" de l'objet, généré à partir de ses propriétés
      * principales.
-     * @return int
+     * @return int, hash code de l'objet Address
      */
     @Override
     public int hashCode() {
@@ -94,60 +94,60 @@ public class Address implements Serializable {
      * @return Id
      */
     public long getId() {
-        return Id;
+        return id;
     }
 
     /** Getter
-     * @return number
+     * @return number, numéro de la rue
      */
     public String getNumber() {
         return number;
     }
 
     /** Setter
-     * @param number numéro de rue
+     * @param number nouveau numéro de rue
      */
     public void setNumber(String number) {
         this.number = number;
     }
 
     /** Getter
-     * @return street
+     * @return street, nom de la rue
      */
     public String getStreet() {
         return street;
     }
 
     /** Setter
-     * @param street nom de la rue
+     * @param street nouveau nom de la rue
      */
     public void setStreet(String street) {
         this.street = street;
     }
 
     /** Getter
-     * @return zipCode
+     * @return zipCode, code postal de la ville
      */
     public String getZipCode() {
         return zipCode;
     }
 
     /** Setter
-     * @param zipCode code postal
+     * @param zipCode nouveau code postal de la ville
      */
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
     /** Getter
-     * @return city
+     * @return city, nom de la ville
      */
     public String getCity() {
         return city;
     }
 
     /** Setter
-     * @param city nom de la ville
+     * @param city nouveau nom de la ville
      */
     public void setCity(String city) {
         this.city = city;

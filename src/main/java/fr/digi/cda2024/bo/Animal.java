@@ -8,15 +8,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "animal")
 public class Animal implements Serializable {
     /** Id, valeur numérique unique,
      * clé primaire auto-incrémentée en base de données
-     * */
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    protected long Id;
+    protected long id;
 
     /** Date de naissance de l'animal */
     @Column(name = "BIRTH")
@@ -25,6 +26,10 @@ public class Animal implements Serializable {
     /** Couleur de l'animal */
     @Column(name = "COLOR")
     protected String color;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_PET_STORE")
+    private PetStore petStore;
 
     /** Constructeur vide */
     public Animal() {
@@ -41,6 +46,42 @@ public class Animal implements Serializable {
     }
 
     /**
+     * Constructeur
+     * @param petStore animalerie où se trouve l'animal
+     * @param color couleur
+     * @param birth date de naissance
+     */
+    public Animal(PetStore petStore, String color, LocalDate birth) {
+        this.petStore = petStore;
+        this.color = color;
+        this.birth = birth;
+    }
+
+    /**
+     * Rattache l'animalerie à l'animal et ajoute l'animal
+     * dans la liste des animaux de l'animalerie.
+     * @param petStore animalerie
+     */
+    public void ajouterPetStore(PetStore petStore) {
+        if (petStore != null) {
+            this.petStore = petStore;
+            petStore.getAnimals().add(this);
+        }
+    }
+
+    /**
+     * Retire l'animalerie de l'animal et retire l'animal
+     * de la liste des animaux de l'animalerie.
+     * @param petStore animalerie
+     */
+    public void retirerPetStore(PetStore petStore) {
+        if (petStore != null) {
+            petStore.getAnimals().remove(this);
+            this.petStore = null;
+        }
+    }
+
+    /**
      * Retourne une chaîne de caractères contenant les informations
      * principales de l'instance d'Animal.
      * @return String
@@ -51,7 +92,7 @@ public class Animal implements Serializable {
         DateTimeFormatter formateurDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         final StringBuilder sb = new StringBuilder("Animal{");
-        sb.append("Id=").append(Id);
+        sb.append("ID=").append(id);
 
         if (birth != null) {
             sb.append(", birth=").append(birth.format(formateurDate));
@@ -66,10 +107,10 @@ public class Animal implements Serializable {
     }
 
     /**
-     * Retourne 'true' si l'objet passé en argument est identique
-     * à l'objet Address actuel, 'false' s'ils sont différents.
+     * Teste l'égalité entre l'objet actuel et celui passé en argument.
      * @param o objet à comparer à l'objet Animal
-     * @return boolean
+     * @return boolean, 'true' si les objets sont identiques,
+     *          'false' s'ils sont différents
      */
     @Override
     public boolean equals(Object o) {
@@ -81,7 +122,7 @@ public class Animal implements Serializable {
     /**
      * Retourne le "hash code" de l'objet, généré à partir de ses propriétés
      * principales.
-     * @return int
+     * @return int, hash code de l'objet Animal
      */
     @Override
     public int hashCode() {
@@ -92,34 +133,41 @@ public class Animal implements Serializable {
      * @return Id
      */
     public long getId() {
-        return Id;
+        return id;
     }
 
     /** Getter
-     * @return birth
+     * @return birth, date de naissance de l'animal
      */
     public LocalDate getBirth() {
         return birth;
     }
 
     /** Setter
-     * @param birth birth
+     * @param birth nouvelle date de naissance de l'animal
      */
     public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
     /** Getter
-     * @return color
+     * @return color, la couleur de l'animal
      */
     public String getColor() {
         return color;
     }
 
     /** Setter
-     * @param color color
+     * @param color nouvelle couleur de l'animal
      */
     public void setColor(String color) {
         this.color = color;
+    }
+
+    /** Getter
+     * @return petStore, l'animalerie dans laquelle se trouve l'animal
+     */
+    public PetStore getPetStore() {
+        return petStore;
     }
 }

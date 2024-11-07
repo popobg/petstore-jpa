@@ -3,16 +3,20 @@ package fr.digi.cda2024.bo;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "product")
 public class Product implements Serializable {
     /** Id, valeur numérique unique,
      * clé primaire auto-incrémentée en base de données
-     * */
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long Id;
+    private long id;
 
     /** Code produit */
     // La taille d'un code produit est généralement de 13 caractères
@@ -35,6 +39,14 @@ public class Product implements Serializable {
     @Column(name = "PRICE")
     private double price;
 
+    /** Ensemble d'animaleries possédant le produit */
+    @ManyToMany(mappedBy = "products")
+    private Set<PetStore> petstores;
+
+    {
+        this.petstores = new HashSet<>();
+    }
+
     /** Constructeur vide */
     public Product() {
     }
@@ -54,6 +66,29 @@ public class Product implements Serializable {
     }
 
     /**
+     * Appelle ajouterProduct : ajoute le produit dans la liste des produits
+     * de l'animalerie et ajoute l'animalerie aux animaleries possédant
+     * le produit.
+     * @param petStore animalerie à ajouter
+     */
+    public void ajouterPetStore(PetStore petStore) {
+        if (petStore != null) {
+            petStore.ajouterProduct(this);
+        }
+    }
+
+    /**
+     * Appelle retirerProduct : retire le produit de la liste des produits
+     * de l'animalerie et retire l'animalerie des animaleries du produit.
+     * @param petStore animalerie à ajouter
+     */
+    public void retirerPetStore(PetStore petStore) {
+        if (petStore != null) {
+            petStore.retirerProduct(this);
+        }
+    }
+
+    /**
      * Retourne une chaîne de caractères contenant les informations
      * principales du produit.
      * @return String
@@ -61,7 +96,7 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Product{");
-        sb.append("Id=").append(Id);
+        sb.append("ID=").append(id);
         sb.append(", code='").append(code).append('\'');
         sb.append(", label='").append(label).append('\'');
         sb.append(", type=").append(type);
@@ -71,10 +106,10 @@ public class Product implements Serializable {
     }
 
     /**
-     * Retourne 'true' si l'objet passé en argument est identique
-     * à l'objet Address actuel, 'false' s'ils sont différents.
+     * Teste l'égalité entre l'objet actuel et celui passé en argument.
      * @param o objet à comparer à l'objet Product
-     * @return boolean
+     * @return boolean, 'true' si les objets sont identiques,
+     *          'false' s'ils sont différents
      */
     @Override
     public boolean equals(Object o) {
@@ -86,7 +121,7 @@ public class Product implements Serializable {
     /**
      * Retourne le "hash code" de l'objet, généré à partir de ses propriétés
      * principales.
-     * @return int
+     * @return int, hash code de l'objet Product
      */
     @Override
     public int hashCode() {
@@ -97,62 +132,69 @@ public class Product implements Serializable {
      * @return Id
      */
     public long getId() {
-        return Id;
+        return id;
     }
 
     /** Getter
-     * @return code
+     * @return code, code produit
      */
     public String getCode() {
         return code;
     }
 
     /** Setter
-     * @param code code
+     * @param code nouveau code produit
      */
     public void setCode(String code) {
         this.code = code;
     }
 
     /** Getter
-     * @return label
+     * @return label, libellé du produit
      */
     public String getLabel() {
         return label;
     }
 
     /** Setter
-     * @param label label
+     * @param label nouveau libellé du produit
      */
     public void setLabel(String label) {
         this.label = label;
     }
 
     /** Getter
-     * @return type
+     * @return type, type de produit
      */
     public ProdType getType() {
         return type;
     }
 
     /** Setter
-     * @param type type
+     * @param type nouveau type du produit
      */
     public void setType(ProdType type) {
         this.type = type;
     }
 
     /** Getter
-     * @return price
+     * @return price, prix du produit
      */
     public double getPrice() {
         return price;
     }
 
     /** Setter
-     * @param price price
+     * @param price nouveau prix du produit
      */
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    /** Getter
+     * @return petstores, animaleries possédant le produit
+     */
+    public Set<PetStore> getPetstores() {
+        return petstores;
     }
 }
