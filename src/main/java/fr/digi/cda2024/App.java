@@ -62,7 +62,7 @@ public class App {
         animalerieZooEtMoi.ajouterProduct(produitBalayette);
 
         // PERSISTANCE DES DONNEES
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("banque-jpa");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("petstore-jpa");
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
