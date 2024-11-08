@@ -25,8 +25,7 @@ Elle décrit la structure et les relations qui doivent exister entre les donnée
 ### Base de données
 La base de données choisie ici est MariaDB, mais vous pouvez utiliser la base de données relationnelle de votre choix en configurant le fichier persistence.xml (cf [Configuration](#configuration)).
 
-Le serveur utilisé tourne sur notre machine locale (utilisation de l'IP localhost (127.0.0.1)).\
-Il vous faudra
+Il vous faudra utiliser votre propre serveur hébergeant votre base de données (cf [Installation](#installation)).
 
 ### Mapping Objet-Relation (O/R)
 Dans notre application, le mapping entités-tables est réalisé à l'aide de l'API proposée par JPA (version 3.1) et l'ORM Hibernate, qui apporte une abstraction supplémentaire par rapport à JDBC.\
@@ -43,12 +42,15 @@ Quelques insertions sont ensuite réalisées, et quelques requêtes JPA et JPQL 
 - **Librairie java associée à votre SGBDR** (par exemple [mariadb-java-client](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client) pour MariaDB) : permet de connecter des applications Java à une base de données MariaDB.
 - **Librairie de l'ORM [Hibernate](https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core)** : application Object Relation Mapping --> abstraction supplémentaire pour aider au mapping et à l'interaction avec une base de données.
 
-Pour les deux librairies utilisées, les dépendances transitives sont listées sur la page de la librairie sur Maven Repository (liens précédents). Elles sont déjà listées dans les dépendances du fichier pom.xml du projet.\
-Le gestionnaire de projet Maven les installera automatiquement si vous lui passez ces deux dépendances.
+Le gestionnaire de projet Maven installera automatiquement les dépendances transitives.
 
 ### Installation
-Il vous faut faire tourner un **serveur local** sur votre machine pour héberger une SGBDR et pouvoir utiliser ce programme.\
-Il vous faudra ensuite créer une **base de données vide** qui sera liée à l'application grâce aux configurations que nous verrons dans la partie suivante. Dans notre application, la base de données est appelée "petstore".
+Vous devez configurer un serveur (local ou autre) pour héberger une SGBDR et pouvoir utiliser ce programme.\
+Il faudra ensuite créer une **base de données vide** qui sera liée à l'application grâce aux configurations que nous verrons dans la partie suivante. Dans notre application, la base de données est appelée "petstore".
+
+Pour une base de données MariaDB ou MySQL, nous vous recommandons d'utiliser cette commande :\
+`CREATE DATABASE petstore CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';`\
+L'encoding choisi ainsi que la façon de traiter les équivalences linguistiques y sont précisées (insensibilité à la casse notamment).
 
 ### Configuration
 #### Fichier persistence.xml
