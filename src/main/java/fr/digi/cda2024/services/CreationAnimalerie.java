@@ -1,15 +1,26 @@
-package fr.digi.cda2024;
+package fr.digi.cda2024.services;
 
 import fr.digi.cda2024.bo.*;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class App {
-    public static void main(String[] args) {
-        // CREATION D'INSTANCES
+public final class CreationAnimalerie {
+
+    // Empêche la création d'objets pour cette classe
+    private CreationAnimalerie() {}
+
+    /**
+     * Création d'objets de chaque type et remplissage d'objets PetStore.
+     * Retourne la liste des animaleries créées.
+     * @return List<PetStore>, les animaleries créées
+     */
+    // Cette classe mériterait un sous-découpage supplémentaire mais cela permet
+    // tout de même de ne pas tout avoir dans la méthode Main.
+    public static List<PetStore> creerAnimaleries() {
         // Création d'objets Address
         Address adresseToulouse = new Address("10 BIS", "rue du Vélo", "31300", "Toulouse");
         Address adressePoissy = new Address("35", "avenue de la bicyclette", "78300", "Poissy");
@@ -61,45 +72,9 @@ public class App {
         animalerieZooEtMoi.ajouterProduct(produitSouris);
         animalerieZooEtMoi.ajouterProduct(produitBalayette);
 
-        // PERSISTANCE DES DONNEES
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("petstore-jpa");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
+        List<PetStore> animaleries = new ArrayList<>();
+        Collections.addAll(animaleries, animalerieAnimalis, animalerieAnimalProtect, animalerieZooEtMoi);
 
-        /*
-         * La configuration en cascade des relations entres les entités
-         * permet de sauvegarder toutes les instances des objets créés précédemment
-         * en persistant l'instance de PetStore, que ces objets lui soient liés
-         * directement ou indirectement.
-         */
-        em.persist(animalerieAnimalis);
-        em.persist(animalerieZooEtMoi);
-        em.persist(animalerieAnimalProtect);
-
-        // REQUETES A LA BASE DE DONNEES
-        // Exemple de requête JPA
-        Product produitID3 = em.find(Product.class, 3L);
-
-        if (produitID3 != null) {
-            System.out.println("Le produit d'ID 3 est le suivant :");
-            System.out.println(produitID3);
-            System.out.println();
-        }
-
-        // Requête JPQL pour trouver tous les animaux d'une animalerie donnée
-        TypedQuery<Animal> queryAnimaux = em.createQuery("select a from PetStore p join p.animals as a where p.name = 'Zoo et moi'", Animal.class);
-        List<Animal> animalsZooEtMoi = queryAnimaux.getResultList();
-
-        if (animalsZooEtMoi != null) {
-            System.out.println("Les animaux de 'Zoo et moi' sont :");
-            for (Animal animal : animalsZooEtMoi) {
-                System.out.println(animal);
-            }
-        }
-
-        transaction.commit();
-        em.close();
-        emf.close();
+        return animaleries;
     }
 }

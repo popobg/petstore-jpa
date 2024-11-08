@@ -100,7 +100,7 @@ public class Product implements Serializable {
         sb.append(", code='").append(code).append('\'');
         sb.append(", label='").append(label).append('\'');
         sb.append(", type=").append(type);
-        sb.append(", price=").append(price);
+        sb.append(", price=").append(price).append("€");
         sb.append('}');
         return sb.toString();
     }
