@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Classe POJO Cat
+ */
 @Entity
 public class Cat extends Animal {
     /** ID de la puce du chat */

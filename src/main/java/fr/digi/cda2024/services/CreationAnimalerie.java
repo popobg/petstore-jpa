@@ -8,8 +8,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Classe créant des instances de chaque objet
+ * et retournant la liste d'animaleries ainsi créée
+ */
 public final class CreationAnimalerie {
 
+    /** Constructeur vide */
     // Empêche la création d'objets pour cette classe
     private CreationAnimalerie() {}
 

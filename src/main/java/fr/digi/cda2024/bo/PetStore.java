@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Classe POJO PetStore
+ */
 @Entity
 @Table(name = "pet_store")
 public class PetStore implements Serializable {

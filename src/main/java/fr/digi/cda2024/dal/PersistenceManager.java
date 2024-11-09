@@ -3,6 +3,10 @@ package fr.digi.cda2024.dal;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+/**
+ * Classe utilitaire permettant la création d'un objet
+ * EntityManagerFactory qui pourra être partagé par toute l'application
+ */
 public final class PersistenceManager {
 
     /**

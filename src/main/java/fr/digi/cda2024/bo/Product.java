@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Classe POJO Product
+ */
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {

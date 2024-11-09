@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Classe POJO Fish
+ */
 @Entity
 @Table(name = "fish")
 public class Fish extends Animal {

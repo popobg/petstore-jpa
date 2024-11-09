@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Classe POJO Address
+ */
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {

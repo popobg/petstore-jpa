@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ * Classe POJO Animal
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "animal")
